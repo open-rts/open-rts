@@ -26,20 +26,20 @@ export class Terrain extends jspb.Message {
     jspb.Message.setField(this, 2, value);
   }
 
-  getPatchsize(): number {
-    return (jspb.Message.getFieldWithDefault(this, 3, 0));
+  get patchSize(): number {
+    return jspb.Message.getFieldWithDefault(this, 3, 0);
   }
 
-  setPatchsize(value: number) {
+  set patchSize(value: number) {
     jspb.Message.setField(this, 3, value);
   }
 
-  getHeightsList(): number[] {
+  get heights(): number[] {
     return jspb.Message.getRepeatedFloatingPointField(this, 4);
   }
 
-  setHeightsList(value) {
-    return jspb.Message.setField(this, 4, value || []);
+  set heights(value: number[]) {
+    jspb.Message.setField(this, 4, value || []);
   }
 
 
@@ -49,7 +49,7 @@ export class Terrain extends jspb.Message {
 
 
   clearHeightsList() {
-    return this.setHeightsList([]);
+    return this.heights = [];
   }
 
   getTexturesList() {
@@ -95,47 +95,48 @@ export class Terrain extends jspb.Message {
   }
 
   static serializeBinaryToWriter(message: Terrain, writer: jspb.BinaryWriter) {
-    var f = undefined;
-    f = message.getVersion();
-    if (f !== 0) {
+
+    const fv = message.getVersion();
+    if (fv !== 0) {
       writer.writeUint32(
         1,
-        f
+        fv
       );
     }
-    f = message.getPatchcount();
-    if (f !== 0) {
+
+    const fpc = message.getPatchcount();
+    if (fpc !== 0) {
       writer.writeUint32(
         2,
-        f
+        fpc
       );
     }
-    f = message.getPatchsize();
-    if (f !== 0) {
+    const fps = message.patchSize;
+    if (fps !== 0) {
       writer.writeUint32(
         3,
-        f
+        fps
       );
     }
-    f = message.getHeightsList();
-    if (f.length > 0) {
+    const fh = message.heights;
+    if (fh && fh.length > 0) {
       writer.writePackedFloat(
         4,
-        f
+        fh
       );
     }
-    f = message.getTexturesList();
-    if (f.length > 0) {
+    const ft = message.getTexturesList();
+    if (ft.length > 0) {
       writer.writeRepeatedString(
         5,
-        f
+        ft
       );
     }
-    f = message.tiles;
-    if (f.length > 0) {
+    const ftl = message.tiles;
+    if (ftl.length > 0) {
       writer.writeRepeatedMessage(
         6,
-        f,
+        ftl,
         Tile.serializeBinaryToWriter
       );
     }
@@ -158,7 +159,7 @@ export class Terrain extends jspb.Message {
           break;
         case 3:
           var value3 = reader.readUint32();
-          msg.setPatchsize(value3);
+          msg.patchSize = value3;
           break;
         case 4:
           var value4 = (reader.isDelimited() ? reader.readPackedFloat() : [reader.readFloat()]);
@@ -192,11 +193,11 @@ export class Terrain extends jspb.Message {
   static toObject(includeInstance: boolean, msg: Terrain) {
     var f, obj = {
       version: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      patchcount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-      patchsize: jspb.Message.getFieldWithDefault(msg, 3, 0),
-      heightsList: (f = jspb.Message.getRepeatedFloatingPointField(msg, 4)) == null ? undefined : f,
-      texturesList: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f,
-      tilesList: jspb.Message.toObjectList(msg.tiles,
+      patchCount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+      patchSize: jspb.Message.getFieldWithDefault(msg, 3, 0),
+      heights: (f = jspb.Message.getRepeatedFloatingPointField(msg, 4)) == null ? undefined : f,
+      textures: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f,
+      tiles: jspb.Message.toObjectList(msg.tiles,
         Tile.toObject, includeInstance)
     }
 
@@ -254,19 +255,18 @@ export class Tile extends jspb.Message {
 
 
   static serializeBinaryToWriter(message: Tile, writer: jspb.BinaryWriter) {
-    var f = undefined;
-    f = message.getTexture();
-    if (f !== 0) {
+    const ft = message.getTexture();
+    if (ft !== 0) {
       writer.writeUint32(
         1,
-        f
+        ft
       );
     }
-    f = message.getPriority();
-    if (f !== 0) {
+    const fp = message.getPriority();
+    if (fp !== 0) {
       writer.writeUint32(
         2,
-        f
+        fp
       );
     }
   }
@@ -289,7 +289,7 @@ export class Tile extends jspb.Message {
   }
 
   toObject(includeInstance?: boolean) {
-    return Tile.toObject(includeInstance, this);
+    return Tile.toObject(includeInstance ?? false, this);
   }
 
   static toObject(includeInstance: boolean, msg: Tile) {
