@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4b662d87-004f-424c-8aff-e9c3b5443d9d/deploy-status)](https://app.netlify.com/sites/openrts/deploys)
+
 # Svelte + Vite
 
 This template should help get you started developing with Svelte in Vite.
