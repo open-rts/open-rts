@@ -9,20 +9,20 @@ export class Terrain extends jspb.Message {
   }
 
 
-  getVersion(): number {
+  get version(): number {
     return jspb.Message.getFieldWithDefault(this, 1, 0);
   }
 
 
-  setVersion(value: number) {
+  set version(value: number) {
     jspb.Message.setField(this, 1, value);
   }
 
-  getPatchcount(): number {
+  get patchCount(): number {
     return jspb.Message.getFieldWithDefault(this, 2, 0);
   }
 
-  setPatchcount(value: number) {
+  set patchCount(value: number) {
     jspb.Message.setField(this, 2, value);
   }
 
@@ -52,12 +52,12 @@ export class Terrain extends jspb.Message {
     return this.heights = [];
   }
 
-  getTexturesList() {
+  get textures(): Array<string> {
     return jspb.Message.getField(this, 5);
   }
 
-  setTexturesList(value) {
-    return jspb.Message.setField(this, 5, value || []);
+  set textures(value: string[]) {
+    jspb.Message.setField(this, 5, value || []);
   }
 
   addTextures(value: string, index?: number) {
@@ -65,8 +65,8 @@ export class Terrain extends jspb.Message {
   }
 
 
-  clearTexturesList() {
-    this.setTexturesList([]);
+  clearTextures() {
+    this.textures = [];
   }
 
   get tiles(): Tile[] {
@@ -96,7 +96,7 @@ export class Terrain extends jspb.Message {
 
   static serializeBinaryToWriter(message: Terrain, writer: jspb.BinaryWriter) {
 
-    const fv = message.getVersion();
+    const fv = message.version;
     if (fv !== 0) {
       writer.writeUint32(
         1,
@@ -104,7 +104,7 @@ export class Terrain extends jspb.Message {
       );
     }
 
-    const fpc = message.getPatchcount();
+    const fpc = message.patchCount;
     if (fpc !== 0) {
       writer.writeUint32(
         2,
@@ -125,7 +125,7 @@ export class Terrain extends jspb.Message {
         fh
       );
     }
-    const ft = message.getTexturesList();
+    const ft = message.textures;
     if (ft.length > 0) {
       writer.writeRepeatedString(
         5,
@@ -150,12 +150,12 @@ export class Terrain extends jspb.Message {
       var field = reader.getFieldNumber();
       switch (field) {
         case 1:
-          let value1 = (reader.readUint32());
-          msg.setVersion(value1);
+          let value1 = reader.readUint32();
+          msg.version = value1;
           break;
         case 2:
           let value2 = reader.readUint32();
-          msg.setPatchcount(value2);
+          msg.patchCount = value2;
           break;
         case 3:
           var value3 = reader.readUint32();
