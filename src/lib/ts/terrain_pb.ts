@@ -231,8 +231,8 @@ export class Tile extends jspb.Message {
       var field = reader.getFieldNumber();
       switch (field) {
         case 1:
-          var value = (reader.readUint32());
-          msg.setTexture(value);
+          var value = reader.readUint32();
+          msg.texture = value;
           break;
         case 2:
           var value = (reader.readUint32());
@@ -255,7 +255,7 @@ export class Tile extends jspb.Message {
 
 
   static serializeBinaryToWriter(message: Tile, writer: jspb.BinaryWriter) {
-    const ft = message.getTexture();
+    const ft = message.texture;
     if (ft !== 0) {
       writer.writeUint32(
         1,
@@ -272,11 +272,11 @@ export class Tile extends jspb.Message {
   }
 
 
-  getTexture(): number {
+  get texture(): number {
     return (jspb.Message.getFieldWithDefault(this, 1, 0));
   }
 
-  setTexture(value: number) {
+  set texture(value: number) {
     jspb.Message.setField(this, 1, value);
   }
 
