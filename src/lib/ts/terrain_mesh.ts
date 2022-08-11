@@ -60,6 +60,8 @@ export class TerrainMesh {
             this._material.subMaterials.push(mat);
         }
 
+        console.dir(textures);
+
         this._patches.forEach((v) => v.build(scene));
     }
 }
@@ -131,7 +133,7 @@ export class TerrainPatch {
 
             for (let x = 0; x < patchSize; x++) {
                 for (let z = 0; z < patchSize; z++) {
-                    const tile = tiles[startIndex + z + x * patchSize];
+                    const tile = tiles[startIndex + x + z * patchSize];
                     const texOld = tile.texture;
                     if (texOld == tex) {
                         const dir = false;//terrain.GetTriangulationDir(px + i, pz + j);
@@ -180,7 +182,6 @@ export class TerrainPatch {
             new BABYLON.SubMesh(splat.texture, 0, vertCount, splat.startIndex, splat.count, terrainMesh);
 
         }
-        console.dir(terrainMesh.subMeshes);
 
         terrainMesh.material = this._terrain.material;
     }
