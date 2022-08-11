@@ -53,7 +53,7 @@ export class Terrain extends jspb.Message {
   }
 
   get textures(): Array<string> {
-    return jspb.Message.getField(this, 5);
+    return jspb.Message.getField(this, 5) as Array<string>;
   }
 
   set textures(value: string[]) {
@@ -235,8 +235,8 @@ export class Tile extends jspb.Message {
           msg.texture = value;
           break;
         case 2:
-          var value = (reader.readUint32());
-          msg.setPriority(value);
+          var value = reader.readUint32();
+          msg.priority = value;
           break;
         default:
           reader.skipField();
@@ -262,7 +262,7 @@ export class Tile extends jspb.Message {
         ft
       );
     }
-    const fp = message.getPriority();
+    const fp = message.priority;
     if (fp !== 0) {
       writer.writeUint32(
         2,
@@ -280,12 +280,12 @@ export class Tile extends jspb.Message {
     jspb.Message.setField(this, 1, value);
   }
 
-  getPriority(): number {
+  get priority(): number {
     return (jspb.Message.getFieldWithDefault(this, 2, 0));
   }
 
-  setPriority(value: number) {
-    return jspb.Message.setField(this, 2, value);
+  set priority(value: number) {
+    jspb.Message.setField(this, 2, value);
   }
 
   toObject(includeInstance?: boolean) {
