@@ -11,12 +11,12 @@ export function loadGame() {
         // Create a FreeCamera, and set its position to {x: 0, y: 5, z: -10}
         var camera = new BABYLON.FreeCamera(
             "camera1",
-            new BABYLON.Vector3(64 * 8, 128, 64 * 8),
+            new BABYLON.Vector3(64 * 8, 512, 64 * -4),
             scene
         );
 
         // Target the camera to scene origin
-        camera.setTarget(new BABYLON.Vector3(64 * 8, 64, 64 * 8 * 2));
+        camera.setTarget(new BABYLON.Vector3(64 * 8, 64, 64 * 8));
         // Attach the camera to the canvas
         camera.attachControl(canvas, false);
         // Create a basic light, aiming 0, 1, 0 - meaning, to the sky

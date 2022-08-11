@@ -56,11 +56,8 @@ export class TerrainMesh {
         for (let i = 0; i < textures.length; i++) {
             var mat = new BABYLON.StandardMaterial("material-" + i, scene);
             mat.diffuseColor = colors[i % colors.length];
-
             this._material.subMaterials.push(mat);
         }
-
-        console.dir(textures);
 
         this._patches.forEach((v) => v.build(scene));
     }
