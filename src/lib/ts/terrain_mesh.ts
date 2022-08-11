@@ -101,12 +101,12 @@ export class TerrainPatch {
         const textures: number[] = [];
         const splats: TerrainSplat[] = [];
 
-        for (let i = 0; i < vsize; i++) {
-            const ix = gx + i;
+        for (let x = 0; x < vsize; x++) {
+            const ix = gx + x;
 
-            for (let j = 0; j < vsize; j++) {
-                const iz = gz + j;
-                const v = (ix * mapSize) + iz;
+            for (let z = 0; z < vsize; z++) {
+                const iz = gz + z;
+                const v = ix + (mapSize * iz);
 
                 positions.push(ix * 4);
                 positions.push(terrain.heights[v]);
