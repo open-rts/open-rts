@@ -26,6 +26,15 @@ export class TerrainMesh {
     build(scene: BABYLON.Scene): void {
         const textures = this._terrain.textures;
         const colors = [
+            BABYLON.Color3.Random(),
+            BABYLON.Color3.Random(),
+            BABYLON.Color3.Random(),
+            BABYLON.Color3.Random(),
+            BABYLON.Color3.Random(),
+            BABYLON.Color3.Random(),
+            BABYLON.Color3.Random(),
+            BABYLON.Color3.Random(),
+
             BABYLON.Color3.Red(),
             BABYLON.Color3.Blue(),
             BABYLON.Color3.Yellow(),
@@ -36,14 +45,8 @@ export class TerrainMesh {
             new BABYLON.Color3(165, 42, 42),
             new BABYLON.Color3(191, 255, 0),
 
-            BABYLON.Color3.Random(),
-            BABYLON.Color3.Random(),
-            BABYLON.Color3.Random(),
-            BABYLON.Color3.Random(),
-            BABYLON.Color3.Random(),
-            BABYLON.Color3.Random(),
-            BABYLON.Color3.Random(),
-            BABYLON.Color3.Random(),
+
+
             BABYLON.Color3.Random(),
             BABYLON.Color3.Random(),
             BABYLON.Color3.Random(),
@@ -51,11 +54,46 @@ export class TerrainMesh {
         ];
 
         this._material = new BABYLON.MultiMaterial("multi", scene);
-
+        //console.dir(textures);
 
         for (let i = 0; i < textures.length; i++) {
-            var mat = new BABYLON.StandardMaterial("material-" + i, scene);
-            mat.diffuseColor = colors[i % colors.length];
+            let mat = new BABYLON.StandardMaterial("material-" + i, scene);
+            mat.specularPower = 0;
+
+            let tex = textures[i];
+            if (tex == "aegean_grass_dirt_01") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/grass_dirt_01.png");
+            }
+            else if (tex == "aegean_cliff_02") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/cliff_02.png");
+            }
+            else if (tex == "aegean_grass_03") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/grass_03.png");
+            }
+            else if (tex == "aegean_grass_01") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/grass_01.png");
+            }
+            else if (tex == "aegean_forestfloor_01") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/forestfloor_01.png");
+            }
+            else if (tex == "aegean_rocks_grass_01") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/rocks_grass_01.png");
+            }
+            else if (tex == "aegean_rocks_dirt_01") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/rocks_dirt_01.png");
+            }
+            else if (tex == "aegean_paving_02") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/paving_02.png");
+            }
+            else if (tex == "aegean_grass_02") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/grass_02.png");
+            }
+            else if (tex == "aegean_dirt_rocks_01") {
+                mat.diffuseTexture = new BABYLON.Texture("assets/textures/terrain/aegean_anatolia/dirt_rocks_01.png");
+            }
+            else {
+                mat.diffuseColor = colors[i % colors.length];
+            }
             this._material.subMaterials.push(mat);
         }
 
@@ -94,9 +132,15 @@ export class TerrainPatch {
         var terrainMesh = new BABYLON.Mesh(name, scene);
 
         const positions: number[] = [];
+        const uvs: number[] = [];
         const indices: number[] = [];
         const textures: number[] = [];
         const splats: TerrainSplat[] = [];
+
+        const piOver4 = Math.PI / 4.0;
+        const l = 32.0;
+        const c = Math.cos(piOver4) / l;
+        const s = Math.sin(piOver4) / l;
 
         for (let x = 0; x < vsize; x++) {
             const ix = gx + x;
@@ -104,10 +148,15 @@ export class TerrainPatch {
             for (let z = 0; z < vsize; z++) {
                 const iz = gz + z;
                 const v = ix + (mapSize * iz);
+                const posx = ix * 4;
+                const posz = iz * 4;
 
-                positions.push(ix * 4);
+                positions.push(posx);
                 positions.push(terrain.heights[v]);
-                positions.push(iz * 4);
+                positions.push(posz);
+
+                uvs.push(posx * c + posz * s);
+                uvs.push(posx * s + posz * -c);
             }
         }
 
@@ -163,6 +212,7 @@ export class TerrainPatch {
         var vertexData = new BABYLON.VertexData();
 
         vertexData.positions = positions;
+        vertexData.uvs = uvs;
         vertexData.indices = indices;
 
         var normals = [];
